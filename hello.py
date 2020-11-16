@@ -9,5 +9,9 @@ def hello_world():
 def hello_name(name:str):
     return 'hello %s!' % name
 
+@app.route('/blog/<int:postID>')
+def show_blog(postID:int):
+    return 'postID is %d' % postID
+
 if __name__ =='__main__':
     app.run()
