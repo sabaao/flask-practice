@@ -1,13 +1,13 @@
-from flask import Flask, redirect, url_for,request
+from flask import Flask, redirect, url_for,request, render_template
 app = Flask(__name__)
 
 @app.route('/hello')
 def hello_world():
     return 'hello world'
 
-@app.route('/hello<name>')
+@app.route('/hello/<name>')
 def hello_name(name:str):
-    return 'hello %s!' % name
+    return render_template('hello.html', name = name)
 
 @app.route('/blog/<int:postID>')
 def show_blog(postID:int):
@@ -32,5 +32,6 @@ def hello_user(name:str):
 def hello_getparam():
     user = request.args.get('nm')
     return 'nm is %s' % user
+
 if __name__ =='__main__':
     app.run()
