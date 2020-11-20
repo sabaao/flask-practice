@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for,request
 app = Flask(__name__)
 
 @app.route('/hello')
@@ -28,5 +28,9 @@ def hello_user(name:str):
     else:
         return redirect(url_for('hello_guest',guest = name))
 
+@app.route('/hello/getparam',methods=['GET'])
+def hello_getparam():
+    user = request.args.get('nm')
+    return 'nm is %s' % user
 if __name__ =='__main__':
     app.run()
