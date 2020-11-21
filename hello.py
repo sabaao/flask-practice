@@ -1,5 +1,8 @@
 from flask import Flask, redirect, url_for,request, render_template
+from flask.globals import session
 app = Flask(__name__)
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 @app.route('/hello')
 def hello_world():
@@ -32,6 +35,19 @@ def hello_user(name:str):
 def hello_getparam():
     user = request.args.get('nm')
     return 'nm is %s' % user
+
+@app.route('/get/session',methods = ['GET'])
+def get_session():
+    if 'username' in session :
+        username = session['username']
+        return 'Logined as %s' % username
+    else:
+        return 'You are not logged in session'
+
+@app.route('/set/session/<username>')
+def set_session(username:str):
+    session['username'] = username
+    return redirect(url_for('get_session'))
 
 if __name__ =='__main__':
     app.run()
